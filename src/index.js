@@ -2,12 +2,39 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import Favoris from './components/BookmarkPage/Favoris';
+import Episodes from './components/EpisodePage/Episodes';
 import reportWebVitals from './reportWebVitals';
+
+import {
+  createBrowserRouter,
+  RouterProvider
+} from 'react-router-dom';
+import Errorpage from './components/Errorpage';
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    errorElement: <Errorpage/>
+  },
+  {
+    path: "/favoris",
+    element: <Favoris />,
+    errorElement: <Errorpage/> 
+  },
+  {
+    path: "/episodes",
+    element: <Episodes />,
+    errorElement: <Errorpage/>
+  },
+]);
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 
