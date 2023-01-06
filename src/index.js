@@ -5,6 +5,7 @@ import App from './App';
 import Favoris from './components/BookmarkPage/Favoris';
 import Episodes from './components/EpisodePage/Episodes';
 import reportWebVitals from './reportWebVitals';
+import Personnage from './components/CharacterPage/CharacterPage';
 
 import {
   createBrowserRouter,
@@ -20,14 +21,16 @@ const router = createBrowserRouter([
   },
   {
     path: "/favoris",
-    element: <Favoris />,
-    errorElement: <Errorpage/> 
+    element: <Favoris />
   },
   {
     path: "/episodes",
-    element: <Episodes />,
-    errorElement: <Errorpage/>
+    element: <Episodes />
   },
+  {
+    path: "/personnage/:personnageId",
+    element: <Personnage />
+  }
 ]);
 
 

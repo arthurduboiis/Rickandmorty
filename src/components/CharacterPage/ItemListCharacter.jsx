@@ -14,7 +14,6 @@ export default function ItemCharacter({ characterLink }) {
     fetch(characterLink)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setCharacter(data);
         cookies.favorite && cookies.favorite.includes(data.id) ? setIsInFavorite(true) : setIsInFavorite(false);
         setIsLoading(false);
@@ -23,7 +22,7 @@ export default function ItemCharacter({ characterLink }) {
         console.log(error);
       });
      
-  }, []);
+  }, [cookies.favorite, characterLink]);
 
   if (loading) {
     return <div className="text-3xl font-bold underline">Loading...</div>;
@@ -43,12 +42,17 @@ export default function ItemCharacter({ characterLink }) {
   }
 
   return (
-    <div className="p-2">
+    <div >
       <div
         className="
           bg-white
           shadow-md
           h-32
+          transition
+          duration-400
+          ease-in-out
+          hover:scale-105
+          hover:shadow-2xl
           rounded-3xl
           flex flex-col
           overflow-hidden
@@ -70,17 +74,17 @@ export default function ItemCharacter({ characterLink }) {
             items-baseline
             justify-around
             h-1/2
-            pl-6
+            pl-1
             sm:h-full sm:items-baseline sm:w-1/2
           "
         >
-          <div className="flex flex-col justify-start items-baseline">
-            <h1 className="text-lg font-normal mb-0 text-gray-600 font-sans">
+          <div className="flex flex-col justify-start items-start">
+            <a href={"/personnage/" + character.id} className="text-sm font-normal mb-0 text-gray-600 font-sans p-2 underline">
               {character.name}
-            </h1>
+            </a>
           </div>
 
-          <div className="w-full flex justify-between items-center">
+          <div className="w-full flex items-center">
             <button
               className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded-full shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
               type="button"

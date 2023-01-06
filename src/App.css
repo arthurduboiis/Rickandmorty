@@ -5,6 +5,7 @@
   background-color: #F6BE59;
   min-height: 100vh;
   font-family: 'Creepster', cursive;
+  overflow: none;
 }
 
 .fontRick {

@@ -70,7 +70,7 @@ export default function Episodes() {
                 <h1 className="text-5xl font-bold underline">Épisodes</h1>
                 <div className="flex flex-col items-center justify-center py-4 w-full">
                     {episodes.results.map((episode) => (
-                        <EpisodeCard key={episode.id} episode={episode} />
+                        <EpisodeCard key={episode.id} id={episode.id} episode={episode} />
                     ))}
                 </div>
 

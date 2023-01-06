@@ -10,7 +10,7 @@ export default function EpisodeCard({episode}){
     }
 
     return (
-        <div className="flex flex-col items-center justify-center ring-4 ring-yellow-500 ring-opacity-50 my-4 w-11/12">
+        <div className="flex flex-col items-center justify-center border-4 border-yellow-500 border-opacity-50 rounded-md  my-4 w-11/12">
             <div className="flex flex-row items-center w-full justify-between p-2">
                 <h2 className="text-3xl font-bold ">
                     {episode.name}
