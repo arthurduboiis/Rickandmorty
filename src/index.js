@@ -12,6 +12,7 @@ import {
   RouterProvider
 } from 'react-router-dom';
 import Errorpage from './components/Errorpage';
+import EpisodePage from './components/EpisodePage/EpisodePage';
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
   {
     path: "/personnage/:personnageId",
     element: <Personnage />
+  },
+  {
+	path: "/episode/:episodeId",
+	element: <EpisodePage />
   }
 ]);
 

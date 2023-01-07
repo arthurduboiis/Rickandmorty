@@ -35,11 +35,14 @@ export default function HomePage() {
       });
 
     const favorite = cookies.favorite || [];
-
+	//console.log(favouriteCharacter.length)
+	//console.log(favorite.length)
     const string = favorite.slice(Math.max(favorite.length - 5, 0)).join(",");
-    fetch(`https://rickandmortyapi.com/api/character/${string}`)
+	console.log(string)
+    fetch(`https://rickandmortyapi.com/api/character/[${string}]`)
       .then((res) => res.json())
       .then((data) => {
+		console.log(data)
         setFavouriteCharacter(data);
       })
       .catch((error) => {
@@ -52,8 +55,8 @@ export default function HomePage() {
   }, [cookies.favorite]);
 
   return (
-    <div className="flex justify-center">
-      <div className="border-4 border-yellow-500 border-opacity-50 rounded-md  mx-5 w-1/2">
+    <div className="flex flex-col sm:flex-row justify-center">
+      <div className="border-4 border-yellow-500 border-opacity-50 rounded-md mx-5 md:w-1/2 w-full">
         <div>
           <h3 className="text-2xl font-bold ">Quelques personnages</h3>
         </div>
@@ -69,7 +72,7 @@ export default function HomePage() {
           )}
         </div>
       </div>
-      <div className="border-4 border-yellow-500 border-opacity-50 rounded-md  mx-5 w-1/2">
+      <div className="border-4 border-yellow-500 border-opacity-50 rounded-md  mx-5 md:w-1/2 w-full">
         <div>
           <h3 className="text-2xl font-bold ">Mes derniers favoris</h3>
         </div>

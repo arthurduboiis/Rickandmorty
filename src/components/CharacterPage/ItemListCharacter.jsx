@@ -42,61 +42,55 @@ export default function ItemCharacter({ characterLink }) {
   }
 
   return (
-    <div >
-      <div
-        className="
-          bg-white
-          shadow-md
-          h-32
-          transition
-          duration-400
-          ease-in-out
-          hover:scale-105
-          hover:shadow-2xl
-          rounded-3xl
-          flex flex-col
-          overflow-hidden
-          sm:flex-row sm:h-32 sm:w-2/4
-          md:w-60
-        "
-      >
-        <img
-          className="h-1/2 w-full sm:h-full sm:w-1/2 object-cover"
-          src={character.image}
-          alt={character.name}
-        />
-
-        <div
-          className="
-            flex-1
-            w-full
-            flex flex-col
-            items-baseline
-            justify-around
-            h-1/2
-            pl-1
-            sm:h-full sm:items-baseline sm:w-1/2
-          "
-        >
-          <div className="flex flex-col justify-start items-start">
-            <a href={"/personnage/" + character.id} className="text-sm font-normal mb-0 text-gray-600 font-sans p-2 underline">
-              {character.name}
-            </a>
-          </div>
-
-          <div className="w-full flex items-center">
-            <button
-              className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded-full shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-              type="button"
-              onClick={() => addToFavorite(character.id)}
-            >
-             { isInFavorite ? <FontAwesomeIcon icon={faHeart} />
-             : <FontAwesomeIcon icon={faHeartRegular} />
-             }
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+	<div className="w-72 sm:w-2/4 md:w-60">
+	<div
+	  className="
+		bg-white
+		shadow-md
+		h-32
+		w-full
+		transition duration-400 ease-in-out
+		hover:scale-105 hover:shadow-2xl
+		overflow-hidden
+		rounded-3xl
+		flex flex-row overflow-hidden
+		sm:flex-row sm:h-32
+		sm:w-full
+	  "
+	>
+	  <img
+		className="w-1/2 sm:h-full sm:w-1/2 object-cover"
+		src={character.image}
+		alt={character.name}
+	  />
+  
+	  <div
+		className="
+		   w-1/2
+		  flex flex-col items-baseline justify-between pl-1
+		  h-full sm:items-baseline sm:w-1/2
+		"
+	  >
+		<div className="flex flex-col justify-start items-start">
+		  <a href={"/personnage/" + character.id} className="text-sm font-normal mb-0 text-gray-600 font-sans p-2 underline">
+			{character.name}
+		  </a>
+		</div>
+  
+		<div className="w-full flex items-center justify-end">
+		  <button
+			className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded-full shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+			type="button"
+			onClick={() => addToFavorite(character.id)}
+		  >
+		   { isInFavorite ? <FontAwesomeIcon icon={faHeart} />
+		   : <FontAwesomeIcon icon={faHeartRegular} />
+		   }
+		  </button>
+		</div>
+	  </div>
+	</div>
+  </div>
+  
   );
 }

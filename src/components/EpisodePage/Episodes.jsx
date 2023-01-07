@@ -65,9 +65,9 @@ export default function Episodes() {
         <div>
             <Navbar/>
        
-            <div className="flex flex-col items-center justify-center fontRick">
+            <div className="flex flex-col items-center justify-center font-sans lg:font-rick">
             
-                <h1 className="text-5xl font-bold underline">Épisodes</h1>
+                <h1 className="text-5xl font-bold underline font-rick">Épisodes</h1>
                 <div className="flex flex-col items-center justify-center py-4 w-full">
                     {episodes.results.map((episode) => (
                         <EpisodeCard key={episode.id} id={episode.id} episode={episode} />
@@ -81,7 +81,7 @@ export default function Episodes() {
                     </button>
                     <button className="px-10"
                     onClick={() => episodes.info.next ? next(episodes.info.next) : console.log("no more episode")}>
-                        <FontAwesomeIcon icon={faCaretRight} className="sm:text-3xl md:text-6xl"/>
+                        <FontAwesomeIcon icon={faCaretRight} className="text-lg sm:text-3xl md:text-6xl "/>
                     </button>
                     
                 </div>

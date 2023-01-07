@@ -43,17 +43,7 @@ export default function Favoris() {
         <div className="flex flex-wrap justify-center">
           {characters.map((character) => (
             <div
-              className="
-                        bg-white
-                        shadow-md
-                        h-32
-                        rounded-3xl
-                        flex flex-col
-                        overflow-hidden
-                        sm:flex-row sm:h-32 sm:w-2/4
-                        md:w-60
-                        m-2
-                    "
+              className="m-2"
             key={character.id}
             >
               <ItemCharacter characterLink={character.url} />

@@ -24,7 +24,7 @@ function App() {
 
   return (
     <div className="App">
-<div
+<div className='invisible md:visible'
       style={{
         position: 'absolute',
 		width: '50px',
