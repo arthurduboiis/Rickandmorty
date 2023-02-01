@@ -10,8 +10,8 @@ import { logout } from "../../Actions/auth";
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => ({
-	loading: state.auth.loading,
-	error: state.auth.error
+	loading: state.loading,
+	error: state.error
   });
   
 const mapDispatchToProps = (dispatch) => ({

@@ -1,6 +1,7 @@
 
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
+import { getAuth } from 'firebase/auth';
 import 'firebase/compat/firestore';
 
 const firebaseConfig = {
@@ -15,7 +16,7 @@ const firebaseConfig = {
 
 
 firebase.initializeApp(firebaseConfig);
-
-export const auth = firebase.auth();
+//firebase.firestore().enablePersistence()
+export const auth = getAuth();
 export const db = firebase.firestore();
 export const usersCollectionRef = db.collection('users');

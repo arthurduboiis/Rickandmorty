@@ -7,9 +7,11 @@ import { connect } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 
 const mapStateToProps = (state) => ({
-  loading: state.auth.loading,
-  error: state.auth.error
+  loading: state.loading,
+  error: state.error
 });
+
+
 
 const mapDispatchToProps = (dispatch) => ({
   onSubmit: (username, email, password) => {
@@ -57,29 +59,35 @@ function RegisterForm ({ onSubmit, loading, error }) {
           onSubmit={handleSubmit}
           className="flex flex-wrap justify-center p-6 rounded-lg shadow-md lg:w-1/3 mx-4"
         >
-          <label className="block font-medium mb-2 w-full justify-items-center ">
+          <label className="block font-medium mb-2 w-full justify-items-center " >
             Username:
             <input
               className="form-input rounded-md mt-1 block w-full px-3 py-2"
               type="text"
+			  aria-label="username"
+			  id="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
           </label>
-          <label className="block font-medium mb-2 w-full">
+          <label className="block font-medium mb-2 w-full" >
             Email:
             <input
               className="form-input rounded-md mt-1 block w-full px-3 py-2"
               type="email"
+			  aria-label="emailuser"
+			  id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </label>
-          <label className="block font-medium mb-2 w-full">
+          <label className="block font-medium mb-2 w-full" >
             Password:
             <input
               className="form-input rounded-md mt-1 block w-full px-3 py-2"
               type="password"
+			  aria-label="password"
+			  id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />

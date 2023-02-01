@@ -8,8 +8,8 @@ import { connect } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 
 const mapStateToProps = (state) => ({
-  loading: state.auth.loading,
-  error: state.auth.error
+  loading: state.loading,
+  error: state.error
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -75,4 +75,3 @@ export default connect(mapStateToProps, mapDispatchToProps)(
 })
 
 
-//export default LoginForm;

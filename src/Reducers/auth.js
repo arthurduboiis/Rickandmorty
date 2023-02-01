@@ -8,6 +8,7 @@ export default function auth(state = initialState, action) {
     switch (action.type) {
         case 'LOGIN_REQUEST':
         case 'REGISTER_REQUEST':
+			return { ...state, loading: true };
         case 'LOGOUT_REQUEST':
             return { ...state, loading: true };
         case 'LOGIN_SUCCESS':
