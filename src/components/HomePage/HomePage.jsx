@@ -2,10 +2,72 @@ import { useCookies } from "react-cookie";
 import { useState, useEffect, useRef } from "react";
 import ItemCharacter from "../CharacterPage/ItemListCharacter";
 
+import { auth, usersCollectionRef } from "../../utils/firebase";
+
 export default function HomePage() {
   const [favouriteCharacter, setFavouriteCharacter] = useState([]);
   const [randomCharacter, setRandomCharacter] = useState([]);
   const [cookies, setCookie] = useCookies(["favorite"]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [userUID, setUserUID] = useState(null);
+
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        usersCollectionRef
+          .doc(user.uid)
+          .get()
+          .then((doc) => {
+            if (doc.exists) {
+              setUser(doc.data());
+              setLoading(false);
+            }
+          });
+		  setUserUID(user.uid);
+      } else {
+        setUser(null);
+      }
+    });
+  }, []);
+
+  const fetchDatas = async () => {
+    // set loading
+	setLoading(true);
+    await usersCollectionRef
+      .doc(userUID)
+      .get()
+      .then((doc) => {
+		console.log(doc)
+        if (doc.exists) {
+          console.log(doc.data());
+          const promises = doc.data().favoris.map((id) => {
+            return fetch(`https://rickandmortyapi.com/api/character/${id}`)
+              .then((res) => res.json())
+              .catch((error) => {
+                console.log(error);
+              });
+          });
+          Promise.all(promises)
+            .then((data) => {
+			  setFavouriteCharacter(data);
+              setLoading(false);
+            })
+            .catch((error) => {
+              setError(error);
+              setLoading(false);
+            });
+        }
+      });
+  };
+  useEffect(() => {
+    if (user) {
+      fetchDatas();
+    } else {
+		setFavouriteCharacter([]);
+	}
+  }, [user]);
 
   useEffect(() => {
     fetch("https://rickandmortyapi.com/api/character")
@@ -19,6 +81,12 @@ export default function HomePage() {
             randomNumbers.push(random);
           }
         }
+        const randomCharacters = data.results.filter((character, index) => {
+          return randomNumbers.includes(index);
+        });
+
+        setRandomCharacter(randomCharacters);
+
         fetch(
           `https://rickandmortyapi.com/api/character/${randomNumbers.join(",")}`
         )
@@ -34,25 +102,8 @@ export default function HomePage() {
         console.log(error);
       });
 
-    const favorite = cookies.favorite || [];
-	//console.log(favouriteCharacter.length)
-	//console.log(favorite.length)
-    const string = favorite.slice(Math.max(favorite.length - 5, 0)).join(",");
-	console.log(string)
-    fetch(`https://rickandmortyapi.com/api/character/[${string}]`)
-      .then((res) => res.json())
-      .then((data) => {
-		console.log(data)
-        setFavouriteCharacter(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
 
-
-
-
-  }, [cookies.favorite]);
+  }, []);
 
   return (
     <div className="flex flex-col sm:flex-row justify-center">
@@ -64,7 +115,7 @@ export default function HomePage() {
           {randomCharacter.length > 0 ? (
             randomCharacter.map((character) => (
               <div className="p-4" key={character.id}>
-                <ItemCharacter characterLink={character.url} />
+                <ItemCharacter character={character} />
               </div>
             ))
           ) : (
@@ -80,7 +131,7 @@ export default function HomePage() {
           {favouriteCharacter.length > 0 ? (
             favouriteCharacter.map((character) => (
               <div className="p-4" key={character.id}>
-                <ItemCharacter characterLink={character.url} />
+                <ItemCharacter character={character} />
               </div>
             ))
           ) : (

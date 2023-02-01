@@ -4,7 +4,7 @@ import './App.css';
 import HomePage from './components/HomePage/HomePage';
 import Navbar from './components/NavBar/Navbar';
 import soucoupe from './assets/soucoupe.png';
-
+import { motion } from 'framer-motion';
 
 
 function App() {
@@ -23,7 +23,10 @@ function App() {
 	}, [])
 
   return (
-    <div className="App">
+	<motion.div initial={{ opacity: 0 }}
+	animate={{ opacity: 1 }}
+	exit={{ opacity: 0 }}
+	className="App">
 <div className='invisible md:visible'
       style={{
         position: 'absolute',
@@ -39,7 +42,7 @@ function App() {
     <Navbar/>
     <HomePage/>
 
-    </div>
+    </motion.div >
   );
 }
 

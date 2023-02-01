@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../NavBar/Navbar";
+import { motion } from "framer-motion";
 
 export default function Personnage() {
   let { personnageId } = useParams();
@@ -23,6 +24,7 @@ export default function Personnage() {
         )
           .then((res) => res.json())
           .then((data) => {
+			console.log(data)
             setInEpisodes(data);
           })
           .catch((error) => {
@@ -50,7 +52,9 @@ export default function Personnage() {
   }, [personnageId]);
 
   return (
-    <div>
+    <motion.div initial={{ opacity: 0 }}
+	animate={{ opacity: 1 }}
+	exit={{ opacity: 0 }}>
 	<Navbar />
       <div className="flex flex-col justify-center items-center">
         <div className="text-2xl font-bold p-4 ">{character.name}</div>
@@ -73,7 +77,7 @@ export default function Personnage() {
           <div className="font-bold text-xl px-4 pt-4 pb-6 border-b-2 border-yellow-500" >Episodes</div>
           <div className="flex flex-col justify-center items-center pt-2">
             {inEpisodes.map((episode) => (
-              <a key={episode.id} href={"/episodes"}>
+              <a key={episode.id} href={"/episode/:" + episode.id}>
                 {episode.name +
                   " - " +
                   episode.episode +
@@ -84,6 +88,6 @@ export default function Personnage() {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

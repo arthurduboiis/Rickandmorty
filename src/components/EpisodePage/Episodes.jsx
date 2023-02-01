@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Navbar from "../NavBar/Navbar";
 import EpisodeCard from "./EpisodeCard";
 import { faCaretRight, faCaretLeft } from "@fortawesome/free-solid-svg-icons";
+import { motion } from "framer-motion";
 
 export default function Episodes() {
     const [episodes, setEpisodes] = useState([]);
@@ -62,7 +63,9 @@ export default function Episodes() {
 
 
     return (
-        <div>
+        <motion.div initial={{ opacity: 0 }}
+	animate={{ opacity: 1 }}
+	exit={{ opacity: 0 }}>
             <Navbar/>
        
             <div className="flex flex-col items-center justify-center font-sans lg:font-rick">
@@ -86,6 +89,6 @@ export default function Episodes() {
                     
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 }

@@ -15,7 +15,7 @@ export default function EpisodeCard({ episode }) {
             className="bg-yellow-500 hover:bg-yellow-700 text-sm md:text-xl lg:text-3xl md:w-full font-bold py-3 px-5 rounded-full"
             href={"/episode/" + episode.id}
           >
-            Afficher l'épisodes
+            Afficher l'épisode
           </a>
         </div>
       </div>

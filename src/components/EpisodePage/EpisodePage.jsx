@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ItemCharacter from "../CharacterPage/ItemListCharacter";
 import Navbar from "../NavBar/Navbar";
+import { motion } from "framer-motion";
 
 export default function EpisodePage() {
   let { episodeId } = useParams();
@@ -32,7 +33,9 @@ export default function EpisodePage() {
   }
 
   return (
-    <div>
+    <motion.div initial={{ opacity: 0 }}
+	animate={{ opacity: 1 }}
+	exit={{ opacity: 0 }}>
       <Navbar />
       <div className="flex flex-col items-center justify-center py-4 w-full">
         <div className="flex flex-col items-center justify-center border-4 border-yellow-500 border-opacity-50 rounded-md  my-4 w-11/12">
@@ -53,6 +56,6 @@ export default function EpisodePage() {
           </ul>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

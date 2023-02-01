@@ -6,6 +6,9 @@ import Favoris from './components/BookmarkPage/Favoris';
 import Episodes from './components/EpisodePage/Episodes';
 import reportWebVitals from './reportWebVitals';
 import Personnage from './components/CharacterPage/CharacterPage';
+import { AnimatePresence } from 'framer-motion';
+import store from './store';
+import { setAuthIsLoaded } from './Actions/auth';
 
 import {
   createBrowserRouter,
@@ -13,6 +16,10 @@ import {
 } from 'react-router-dom';
 import Errorpage from './components/Errorpage';
 import EpisodePage from './components/EpisodePage/EpisodePage';
+import LoginForm from './components/LoginForm';
+import RegisterForm from './components/RegisterForm';
+import { Provider } from 'react-redux';
+import { auth } from './utils/firebase';
 
 const router = createBrowserRouter([
   {
@@ -29,6 +36,14 @@ const router = createBrowserRouter([
     element: <Episodes />
   },
   {
+	path: "/login",
+	element: <LoginForm/>
+  },
+  {
+	path: "/register",
+	element: <RegisterForm/>
+  },
+  {
     path: "/personnage/:personnageId",
     element: <Personnage />
   },
@@ -38,11 +53,20 @@ const router = createBrowserRouter([
   }
 ]);
 
+auth.onAuthStateChanged(() => {
+    store.dispatch(setAuthIsLoaded());
+});
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+  <Provider store={store}>
+  <AnimatePresence>
+	<RouterProvider router={router} />
+	</AnimatePresence>
+
+  </Provider>
+
   </React.StrictMode>
 );
 
