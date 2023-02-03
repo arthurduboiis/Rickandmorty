@@ -1,53 +1,38 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react/pure";
-import RegisterForm from "../components/RegisterForm";
-import configureMockStore from "redux-mock-store";
-import { Provider } from "react-redux";
+//import EpisodeCard from "../components/RegisterForm";
+
 import { BrowserRouter as Router } from "react-router-dom";
-import firebase from 'firebase/app';
 
 
 // TODO
-// NEED TO CHANGE ALL FIREBASE CALLS TO V9 
+// NEED TO CHANGE ALL FIREBASE CALLS TO V9
 // INSTEAD OF V8 (CURRENTLY USED IN THE APP) TO MAKE THE TESTS WORK
 // https://firebase.google.com/docs/web/modular-upgrade
 
 // GIVE UP FOR THE MOMENT BECAUSE OF THE TIME ( AND MOTIVATION)
 
-  
-describe("test", () => {
+describe("Episode page", () => {
+  //	let store;
 
-//	let store;
+  //  beforeEach(() => {
+  //    store = configureMockStore({});
+  //  });
 
-//  beforeEach(() => {
-//    store = configureMockStore({});
-//  });
-
-
-  it("no submit register form when data is not valid", () => {
+  it("test received data", () => {
     //const onSubmit = jest.fn();
-
 
     //const mockStore = configureMockStore();
     //const store = mockStore({});
 
-	//(firebase.auth).mockReturnValueOnce({});
+    //(firebase.auth).mockReturnValueOnce({});
 
-	//jest.mock('firebase/app', () => {
-	//	return {
-	//	  auth: jest.fn(),
-	//	};
-	//  });
-	  
+    //jest.mock('firebase/app', () => {
+    //	return {
+    //	  auth: jest.fn(),
+    //	};
+    //  });
 
-
-    //render(
-    //  <Router>
-    //    <Provider store={store}>
-    //      <RegisterForm />
-    //    </Provider>
-    //  </Router>
-    //);
 
     //const username = "testUsername";
     //const email = "testEmail@test.com";

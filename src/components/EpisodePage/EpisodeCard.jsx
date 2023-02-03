@@ -1,4 +1,4 @@
-import ItemCharacter from "../CharacterPage/ItemListCharacter";
+
 import { useState } from "react";
 
 export default function EpisodeCard({ episode }) {

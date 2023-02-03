@@ -8,7 +8,8 @@ import { useNavigate } from "react-router-dom";
 
 const mapStateToProps = (state) => ({
   loading: state.loading,
-  error: state.error
+  error: state.error,
+  auth: state.auth
 });
 
 

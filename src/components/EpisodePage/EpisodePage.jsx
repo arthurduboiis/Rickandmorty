@@ -11,6 +11,9 @@ export default function EpisodePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+
+	
+
   useEffect(() => {
     fetch(`https://rickandmortyapi.com/api/episode/${episodeId}`)
       .then((res) => res.json())
