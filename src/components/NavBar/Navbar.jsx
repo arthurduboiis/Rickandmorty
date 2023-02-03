@@ -93,9 +93,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(
               <li className=" my-8 px-2 uppercase text-lg">
                 <a href="/">Accueil</a>
               </li>
-              <li className="my-8 px-2 uppercase ">
+			  {user ?( <li className="my-8 px-2 uppercase ">
                 <a href="/favoris">Favoris</a>
-              </li>
+              </li>) : null}
+
               <li className=" my-8 px-2 uppercase">
                 <a href="/episodes">Épisodes</a>
               </li>

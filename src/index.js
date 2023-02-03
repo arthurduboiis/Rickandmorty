@@ -53,9 +53,9 @@ const router = createBrowserRouter([
   }
 ]);
 
-auth.onAuthStateChanged(() => {
-    store.dispatch(setAuthIsLoaded());
-});
+//auth.onAuthStateChanged(() => {
+//    store.dispatch(setAuthIsLoaded());
+//});
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

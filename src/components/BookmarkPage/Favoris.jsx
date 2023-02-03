@@ -12,6 +12,7 @@ export default function Favoris() {
   const [characters, setCharacters] = useState([]);
 
   const [loading, setLoading] = useState(true);
+  const [isChange , setIsChange] = useState();
 
   const [error, setError] = useState(null);
   const [userUID, setUserUID] = useState(null);
@@ -37,41 +38,40 @@ export default function Favoris() {
   }, []);
   // recupere les favoris de l'utilisateur
 
-  const fetchDatas = async () => {
-    // set loading
-	setLoading(true);
-    await usersCollectionRef
-      .doc(userUID)
-      .get()
-      .then((doc) => {
-		console.log(doc)
-        if (doc.exists) {
-          console.log(doc.data());
-          const promises = doc.data().favoris.map((id) => {
-            return fetch(`https://rickandmortyapi.com/api/character/${id}`)
-              .then((res) => res.json())
-              .catch((error) => {
-                console.log(error);
-              });
-          });
-          Promise.all(promises)
-            .then((data) => {
-              setCharacters(data);
-              setLoading(false);
-            })
-            .catch((error) => {
-              setError(error);
-              setLoading(false);
-            });
-        }
-      });
-  };
+ const handleChange = () => {
+	setIsChange(!isChange);
+ }
 
   useEffect(() => {
     if (user) {
-      fetchDatas();
+		setLoading(true);
+		usersCollectionRef
+		  .doc(userUID)
+		  .get()
+		  .then((doc) => {
+			console.log(doc)
+			if (doc.exists) {
+			  console.log(doc.data());
+			  const promises = doc.data().favoris.map((id) => {
+				return fetch(`https://rickandmortyapi.com/api/character/${id}`)
+				  .then((res) => res.json())
+				  .catch((error) => {
+					console.log(error);
+				  });
+			  });
+			  Promise.all(promises)
+				.then((data) => {
+				  setCharacters(data);
+				  setLoading(false);
+				})
+				.catch((error) => {
+				  setError(error);
+				  setLoading(false);
+				});
+			}
+		  });
     }
-  }, [user]);
+  }, [user, isChange]);
 
   if (loading) {
     return <div className="text-3xl font-bold underline">Loading...</div>;
@@ -88,7 +88,7 @@ export default function Favoris() {
         <div className="flex flex-wrap justify-center">
           {characters.map((character) => (
             <div className="m-2" key={character.id}>
-              <ItemCharacter character={character} />
+              <ItemCharacter character={character} onFavoriteChange={handleChange}/>
             </div>
           ))}
         </div>

@@ -2,17 +2,19 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons";
-import { useCookies } from "react-cookie";
+
 
 import { auth, usersCollectionRef } from "../../utils/firebase";
 
 export default function ItemCharacter(props) {
   const [character, setCharacter] = useState();
   const [loading, setIsLoading] = useState(true);
-  const [cookies, setCookie] = useCookies(["favorite"]);
+
   const [isInFavorite, setIsInFavorite] = useState(false);
 
   const [userUID, setUserUID] = useState(null);
+
+  
 
   const [user, setUser] = useState(null);
   
@@ -61,9 +63,12 @@ export default function ItemCharacter(props) {
 	  }
       setIsLoading(false);
     }
-  }, [user, props]);
+  }, [user, props, isInFavorite]);
 
 
+	const handleChange = () => {
+		props.onFavoriteChange();
+	}
 
 
   if (loading) {
@@ -71,18 +76,41 @@ export default function ItemCharacter(props) {
   }
   const addToFavorite = (id) => {
     if (user) {
-      const favorite = user.favoris;
-      console.log(favorite);
+      
+      //console.log(favorite);
+	  usersCollectionRef.doc(userUID).get().then((doc) => {
+		if (doc.exists) {
+			if (doc.data().favoris.includes(id)) {
+				user.favoris = doc.data().favoris;
+				user.favoris.splice(user.favoris.indexOf(id), 1);
+				setIsInFavorite(false);
+				console.log("que pasa la vida")
+				//props.onFavoriteChange(true);
+			  } else {
+				user.favoris = doc.data().favoris;
+				setIsInFavorite(true);
+				user.favoris.push(id);
+				console.log("que pasa")
+				//props.onFavoriteChange(false);
+			  }
+			  console.log("que paspastaa")
+			  
+			  setUser(user);
+			  usersCollectionRef.doc(userUID).set({
+				email: user.email,
+				favoris: user.favoris,
+				username: user.username,
+			  }, {merge: true}).then(() => {
+				console.log("Document successfully written!");
+				handleChange();
+			  })
+			  .catch((error) => {
+				console.error("Error writing document: ", error);
+			  });
+		}
+	  });
 
-      if (favorite.includes(id)) {
-        favorite.splice(favorite.indexOf(id), 1);
-        setIsInFavorite(false);
-      } else {
-        setIsInFavorite(true);
-        favorite.push(id);
-      }
-	  user.favoris = favorite;
-	  usersCollectionRef.doc(userUID).set(user);
+
     }
   };
 
@@ -130,7 +158,9 @@ export default function ItemCharacter(props) {
               <button
                 className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded-full shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                 type="button"
-                onClick={() => addToFavorite(character.id)}
+                onClick={() => {addToFavorite(character.id)
+								
+				}}
               >
                 {isInFavorite ? (
                   <FontAwesomeIcon icon={faHeart} />

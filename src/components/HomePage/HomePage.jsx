@@ -7,10 +7,10 @@ import { auth, usersCollectionRef } from "../../utils/firebase";
 export default function HomePage() {
   const [favouriteCharacter, setFavouriteCharacter] = useState([]);
   const [randomCharacter, setRandomCharacter] = useState([]);
-  const [cookies, setCookie] = useCookies(["favorite"]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [userUID, setUserUID] = useState(null);
+  const [change, setChange] = useState();
 
   const [user, setUser] = useState(null);
   useEffect(() => {
@@ -25,49 +25,49 @@ export default function HomePage() {
               setLoading(false);
             }
           });
-		  setUserUID(user.uid);
+        setUserUID(user.uid);
       } else {
         setUser(null);
       }
     });
   }, []);
 
-  const fetchDatas = async () => {
-    // set loading
-	setLoading(true);
-    await usersCollectionRef
-      .doc(userUID)
-      .get()
-      .then((doc) => {
-		console.log(doc)
-        if (doc.exists) {
-          console.log(doc.data());
-          const promises = doc.data().favoris.map((id) => {
-            return fetch(`https://rickandmortyapi.com/api/character/${id}`)
-              .then((res) => res.json())
-              .catch((error) => {
-                console.log(error);
-              });
-          });
-          Promise.all(promises)
-            .then((data) => {
-			  setFavouriteCharacter(data);
-              setLoading(false);
-            })
-            .catch((error) => {
-              setError(error);
-              setLoading(false);
-            });
-        }
-      });
+  const handleChange = () => {
+    setChange(!change);
   };
+
+ 
   useEffect(() => {
     if (user) {
-      fetchDatas();
-    } else {
-		setFavouriteCharacter([]);
-	}
-  }, [user]);
+		usersCollectionRef
+		.doc(userUID)
+		.get()
+		.then((doc) => {
+		  console.log(doc);
+		  if (doc.exists) {
+			console.log(doc.data());
+			const promises = doc.data().favoris.map((id) => {
+			  return fetch(`https://rickandmortyapi.com/api/character/${id}`)
+				.then((res) => res.json())
+				.catch((error) => {
+				  console.log(error);
+				});
+			});
+			Promise.all(promises)
+			  .then((data) => {
+				setFavouriteCharacter(data);
+				setLoading(false);
+			  })
+			  .catch((error) => {
+				setError(error);
+				setLoading(false);
+			  });
+		  }
+		});
+    } 
+  }, [user, change]);
+
+
 
   useEffect(() => {
     fetch("https://rickandmortyapi.com/api/character")
@@ -101,8 +101,6 @@ export default function HomePage() {
       .catch((error) => {
         console.log(error);
       });
-
-
   }, []);
 
   return (
@@ -115,7 +113,7 @@ export default function HomePage() {
           {randomCharacter.length > 0 ? (
             randomCharacter.map((character) => (
               <div className="p-4" key={character.id}>
-                <ItemCharacter character={character} />
+                <ItemCharacter character={character} onFavoriteChange={handleChange} />
               </div>
             ))
           ) : (
@@ -131,7 +129,10 @@ export default function HomePage() {
           {favouriteCharacter.length > 0 ? (
             favouriteCharacter.map((character) => (
               <div className="p-4" key={character.id}>
-                <ItemCharacter character={character} />
+                <ItemCharacter
+                  character={character}
+                  onFavoriteChange={handleChange}
+                />
               </div>
             ))
           ) : (
